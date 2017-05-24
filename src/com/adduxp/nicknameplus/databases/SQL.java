@@ -1,19 +1,21 @@
-package me.nonit.nicky.databases;
+package com.adduxp.nicknameplus.databases;
 
-import me.nonit.nicky.Nicky;
+import com.adduxp.nicknameplus.Nickname;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public abstract class SQL
 {
     private Connection connection;
-    protected Nicky plugin;
+    protected Nickname plugin;
+    private HashMap<String, String> cache = new HashMap<String, String>();
 
-    public SQL( Nicky plugin )
+    public SQL( Nickname plugin )
     {
         this.plugin = plugin;
 
@@ -69,7 +71,7 @@ public abstract class SQL
                     return false;
                 }
 
-                query( "CREATE TABLE IF NOT EXISTS nicky (uuid varchar(36) NOT NULL, nick varchar(64) NOT NULL, PRIMARY KEY (uuid))" );
+                query( "CREATE TABLE IF NOT EXISTS nickname (uuid varchar(36) NOT NULL, nick varchar(64) NOT NULL, PRIMARY KEY (uuid))" );
             }
         }
         catch( SQLException e )
@@ -84,31 +86,48 @@ public abstract class SQL
 
     public String downloadNick( String uuid )
     {
-        if( ! checkConnection() )
-        {
-            plugin.log( "Error with database" );
-            return null;
-        }
-
         String nick = null;
-        PreparedStatement statement;
-        try
+
+        if( cache.containsKey( uuid ) )
         {
-            statement = connection.prepareStatement( "SELECT nick FROM nicky WHERE uuid = '" + uuid + "';" );
-
-            ResultSet set = statement.executeQuery();
-
-            while( set.next() )
-            {
-                nick = set.getString( "nick" );
-            }
+            nick = cache.get( uuid );
         }
-        catch (SQLException e)
+        else
         {
-            e.printStackTrace();
+            if( !checkConnection() )
+            {
+                plugin.log( "Error with database" );
+                return null;
+            }
+            PreparedStatement statement;
+            try
+            {
+                statement = connection.prepareStatement( "SELECT nick FROM nickname WHERE uuid = '" + uuid + "';" );
+
+                ResultSet set = statement.executeQuery();
+
+                while( set.next() )
+                {
+                    nick = set.getString( "nick" );
+
+                    cache.put( uuid, nick );
+                }
+            }
+            catch( SQLException e )
+            {
+                e.printStackTrace();
+            }
         }
 
         return nick;
+    }
+
+    public void removeFromCache( String uuid )
+    {
+        if( cache.containsKey( uuid ) )
+        {
+            cache.remove( uuid );
+        }
     }
 
     public void uploadNick( String uuid, String nick )
@@ -127,7 +146,7 @@ public abstract class SQL
         PreparedStatement statement;
         try
         {
-            statement = connection.prepareStatement( "INSERT INTO nicky (uuid, nick) VALUES ('" + uuid + "','" + nick + "');" );
+            statement = connection.prepareStatement( "INSERT INTO nickname (uuid, nick) VALUES ('" + uuid + "','" + nick + "');" );
 
             statement.execute();
         }
@@ -148,7 +167,7 @@ public abstract class SQL
         PreparedStatement statement;
         try
         {
-            statement = connection.prepareStatement( "DELETE FROM nicky WHERE uuid = '" + uuid + "';" );
+            statement = connection.prepareStatement( "DELETE FROM nickname WHERE uuid = '" + uuid + "';" );
 
             statement.execute();
         }

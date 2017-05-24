@@ -53,7 +53,7 @@ public class NickCommand implements CommandExecutor
             Nick nick = new Nick( plugin, receiver );
 
             nick.setNick( nname );
-            nick.loadNick();
+            nick.refreshNick();
 
             receiver.sendMessage( Nickname.getPrefix() + "Your nickname has been set to " + ChatColor.YELLOW + nname + ChatColor.GREEN + " by console!" );
             plugin.log( receiver.getName() + "'s nick has been set to " + nname );
@@ -87,7 +87,7 @@ public class NickCommand implements CommandExecutor
             Nick nick = new Nick( plugin, receiver );
 
             nick.setNick( nname );
-            nick.loadNick();
+            nick.refreshNick();
 
             receiver.sendMessage( Nickname.getPrefix() + "Your nickname has been set to " + ChatColor.YELLOW + nname + ChatColor.GREEN + " by " + ChatColor.YELLOW + sender.getName() + ChatColor.GREEN + "!" );
             sender.sendMessage( Nickname.getPrefix() + "You have set " + ChatColor.YELLOW + sender.getName() + ChatColor.GREEN + "'s nname to " + ChatColor.YELLOW + nname + ChatColor.GREEN + "." );
@@ -116,7 +116,7 @@ public class NickCommand implements CommandExecutor
                 Nick nick = new Nick( plugin, player );
 
                 nick.setNick( nname );
-                nick.loadNick();
+                nick.refreshNick();
 
                 player.sendMessage( Nickname.getPrefix() + "Your nickname has been set to " + ChatColor.YELLOW + nname + ChatColor.GREEN + " !" );
             }

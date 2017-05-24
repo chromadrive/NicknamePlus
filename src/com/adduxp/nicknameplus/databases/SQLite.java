@@ -1,6 +1,6 @@
 package com.adduxp.nicknameplus.databases;
 
-import com.adduxp.nicknameplus.Nicky;
+import com.adduxp.nicknameplus.Nickname;
 
 import java.io.File;
 import java.sql.Connection;
@@ -8,9 +8,9 @@ import java.sql.DriverManager;
 
 public class SQLite extends SQL
 {
-    private final Nicky plugin;
+    private final Nickname plugin;
 
-    public SQLite( Nicky plugin )
+    public SQLite( Nickname plugin )
     {
         super(plugin);
 

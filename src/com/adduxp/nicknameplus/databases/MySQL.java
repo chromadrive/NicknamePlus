@@ -1,6 +1,6 @@
-package me.nonit.nicky.databases;
+package com.adduxp.nicknameplus.databases;
 
-import me.nonit.nicky.Nicky;
+import com.adduxp.nicknameplus.Nicky;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 
 public class MySQL extends SQL
 {
-    public MySQL( Nicky plugin )
+    public MySQL( Nickname plugin )
     {
         super(plugin);
     }
