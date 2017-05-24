@@ -1,0 +1,25 @@
+name: NicknamePlus
+main: com.adduxp.nicknameplus
+version: 0.1
+description: Simple nickname plugin that utilizes SQL and TagAPI
+author: AdduxP
+
+commands:
+   nick:
+      description: Set a nickname
+      usage: /<command>
+   delnick:
+      description: Remove a nickname
+      usage: /<command>
+
+permissions:
+    nickname.set:
+        default: op
+    nickname.set.other:
+        default: op
+    nickname.del:
+        default: op
+    nickname.del.other:
+        default: op
+    nickname.color:
+        default: op

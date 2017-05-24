@@ -1,0 +1,9 @@
+# Storage type "sqlite" or "mysql"
+type: 'sqlite'
+
+# MySQL connection settings.
+host: 'localhost'
+port: '3306'
+user: 'root'
+password: 'password'
+database: 'nicknameplus'
