@@ -1,4 +1,4 @@
-NicknamePlus!
+NicknamePlus
 =====
 A simple nicknaming plugin that supports tab list/chat/player nametag renaming. Right now it has fairly bare-bones functionality (add/delete names, that's about it) but hopefully that'll change soon. At least it works!
 
